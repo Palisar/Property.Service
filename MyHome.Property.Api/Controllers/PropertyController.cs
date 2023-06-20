@@ -38,6 +38,11 @@ namespace MyHome.Property.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdatePropertyAsync(UpdatePropertyRequest request)
         {
+            if(request.UpdatedModel is null)
+                return BadRequest();
+
+            await _propertyService.UpdateProperty(request);
+
             return NoContent();
         }
     }

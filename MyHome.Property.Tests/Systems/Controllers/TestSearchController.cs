@@ -179,9 +179,18 @@ namespace MyHome.Property.Tests.Systems.Controllers
             request.UpdatedModel = new PropertyModel();
 
             //Act
+            mockPropertyService.Setup(service => service.UpdateProperty(request))
+                .Returns(Task.CompletedTask);
+
+            var sut = new PropertyController(mockPropertyService.Object);
+            await sut.UpdatePropertyAsync(request);
 
             //Assert
-            
+            mockPropertyService.Verify(service =>
+                    service.UpdateProperty(request),
+                Times.Once()
+            );
+
 
         }
 
@@ -190,11 +199,16 @@ namespace MyHome.Property.Tests.Systems.Controllers
         {
             //Arrange
             var request = new UpdatePropertyRequest();
-            request.UpdatedModel = new PropertyModel();
+
+            mockPropertyService.Setup(service => service.UpdateProperty(request))
+                .Returns(Task.CompletedTask);
+
+            var sut = new PropertyController(mockPropertyService.Object);
 
             //Act
-
+            var result = await sut.UpdatePropertyAsync(request);
             //Assert
+            result.Should().BeOfType<BadRequestResult>();
         }
 
         #endregion

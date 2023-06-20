@@ -35,6 +35,7 @@ namespace MyHome.Property.Business.Services
 
         public async Task<PropertyModel> CreateProperty(CreatePropertyRequest createRequest)
         {
+
             var properties = await _repository.GetAllAsync();
             var maxId = properties.MaxBy(x => x.Id).Id;
 
@@ -42,6 +43,11 @@ namespace MyHome.Property.Business.Services
             await _repository.CreateAsync(createRequest.Model);
 
             return createRequest.Model;
+        }
+
+        public Task UpdateProperty(UpdatePropertyRequest updateRequest)
+        {
+            throw new NotImplementedException();
         }
     }
 }
