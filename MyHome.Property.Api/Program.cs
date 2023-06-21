@@ -20,6 +20,7 @@ namespace MyHome.Property.Api
             ////NOTE : Made this singleton for example purposes only.
             //builder.Services.AddSingleton<IRepository<PropertyModel>, InMemoryPropertyDatabase>();
 
+            //Comment out bellow this and unComment above for local testing.
             builder.Services
                 .AddMongo()
                 .AddMongoRepository<PropertyModel>("properties");

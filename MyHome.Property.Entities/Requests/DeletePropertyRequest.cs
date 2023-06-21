@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyHome.Property.Tests.Helpers
+namespace MyHome.Property.Entities.Requests
 {
-    public static class MockHttpMessageHandler
+    public class DeletePropertyRequest
     {
-       
+        public int Id { get; set; }
     }
 }
