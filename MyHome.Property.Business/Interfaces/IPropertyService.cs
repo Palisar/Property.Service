@@ -14,7 +14,7 @@ namespace MyHome.Property.Business.Interfaces
         Task<SearchResponse> GetAllProperties(SearchRequest request);
         Task<PropertyModel> CreateProperty(CreatePropertyRequest createRequest);
         Task<bool> UpdateProperty(UpdatePropertyRequest updateRequest);
-        //Task DeleteProperty(int id);
+        Task<bool> DeleteProperty(int id);
 
     }
 }

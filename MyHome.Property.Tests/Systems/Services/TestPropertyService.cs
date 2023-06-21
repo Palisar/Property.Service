@@ -210,9 +210,93 @@ namespace MyHome.Property.Tests.Systems.Services
         #endregion
 
         #region DeleteProperty
-
         
+        [Fact]
+        public async Task DeleteProperty_OnSuccess_ReturnTrue()
+        {
+            //arrange
+            var id = 123;
 
+            mockRepository.Setup(repo =>
+                    repo.GetAllAsync(x => x.Id == id))
+                .ReturnsAsync(RepositoryFixture.GetPropertyModelsById);
+
+            mockRepository.Setup(repo =>
+                    repo.RemoveAsync(id))
+                .Returns(Task.CompletedTask);
+
+            var sut = new PropertyService(mockRepository.Object);
+
+            //act
+            var result = await sut.DeleteProperty(id);
+
+            //assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public async Task DeleteProperty_OnGetAllReturnsEmpty_ReturnFalse()
+        {
+            //arrange
+            var id = 123;
+
+            mockRepository.Setup(repo =>
+                    repo.GetAllAsync())
+                .ReturnsAsync(new List<PropertyModel>());
+
+            var sut = new PropertyService(mockRepository.Object);
+
+            //act
+            var result = await sut.DeleteProperty(id);
+
+            //assert
+            result.Should().BeFalse();
+        }
+        [Fact]
+        public async Task DeleteProperty_OnRemoveAsync_ReturnTrue()
+        {
+            //arrange
+            var id = 123;
+            
+            mockRepository.Setup(repo =>
+                    repo.GetAllAsync(x => x.Id == id))
+                .ReturnsAsync(RepositoryFixture.GetPropertyModels);
+
+            mockRepository.Setup(repo =>
+                    repo.RemoveAsync(id))
+                .Returns(Task.CompletedTask);
+
+            var sut = new PropertyService(mockRepository.Object);
+
+            //act
+            var result = await sut.DeleteProperty(id);
+
+            //assert
+            result.Should().BeTrue();
+        }
+
+        [Fact]
+        public async Task DeleteProperty_OnRemoveAsyncThrowsException_ReturnFalse()
+        {
+            //arrange
+            var id = 123;
+
+            mockRepository.Setup(repo =>
+                    repo.GetAllAsync(x => x.Id == id))
+                .ReturnsAsync(RepositoryFixture.GetPropertyModels);
+
+            mockRepository.Setup(repo =>
+                    repo.RemoveAsync(id))
+                .Throws(new Exception());
+
+            var sut = new PropertyService(mockRepository.Object);
+
+            //act
+            var result = await sut.DeleteProperty(id);
+
+            //assert
+            result.Should().BeFalse();
+        }
         #endregion
     }
 }

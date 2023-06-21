@@ -11,6 +11,8 @@ using MyHome.Property.Entities.Entities;
 using MyHome.Property.Entities.Requests;
 using MyHome.Property.Entities.Responses;
 using MyHome.Common.MongoDb;
+using MongoDB.Driver.Core.Operations;
+
 namespace MyHome.Property.Business.Services
 {
     public class PropertyService : IPropertyService
@@ -49,7 +51,9 @@ namespace MyHome.Property.Business.Services
         {
             try
             {
-                var existingProperty = await _repository.GetAllAsync(x => x.Id == updateRequest.UpdatedModel.Id);
+                var existingProperty = await _repository
+                    .GetAllAsync(x => x.Id == updateRequest.UpdatedModel.Id);
+
                 if (!existingProperty.Any()) return false;
 
                 await _repository.UpdateAsync(updateRequest.UpdatedModel);
@@ -59,6 +63,26 @@ namespace MyHome.Property.Business.Services
             {
                 return false;
             }
+        }
+
+        public async Task<bool> DeleteProperty(int id)
+        {
+            try
+            {
+                var existingProperty = await _repository
+                    .GetAllAsync(x => x.Id == id);
+
+                if (!existingProperty.Any()) return false;
+
+                await _repository.RemoveAsync(id);
+                
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+          
         }
     }
 }

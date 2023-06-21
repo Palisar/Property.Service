@@ -244,6 +244,9 @@ namespace MyHome.Property.Tests.Systems.Controllers
             var id = 123;
 
             var sut = new PropertyController(mockPropertyService.Object);
+            
+            mockPropertyService.Setup(service => service.DeleteProperty(id))
+                .ReturnsAsync(true);
 
             //Act
             var result = await sut.DeletePropertyAsync(id);
@@ -251,6 +254,61 @@ namespace MyHome.Property.Tests.Systems.Controllers
             //Assert
             result.Should().BeOfType<NoContentResult>();
         }
+
+        [Fact]
+        public async Task Delete_OnNegativeId_ReturnsBadRequest()
+        {
+            //Arrange
+            var id = -123;
+
+            var sut = new PropertyController(mockPropertyService.Object);
+
+            //Act
+            var result = await sut.DeletePropertyAsync(id);
+
+            //Assert
+            result.Should().BeOfType<BadRequestResult>();
+        }
+
+        [Fact]
+        public async Task Delete_OnSuccess_InvokesPropertyServiceExactlyOnce()
+        {
+            //Arrange
+            var id = 123;
+
+            mockPropertyService.Setup(service => service.DeleteProperty(id))
+                .ReturnsAsync(true);
+
+            var sut = new PropertyController(mockPropertyService.Object);
+
+            //Act
+            var result = await sut.DeletePropertyAsync(id);
+
+            //Assert
+            mockPropertyService.Verify(service =>
+                    service.DeleteProperty(id),
+                Times.Once());
+        }
+
+       
+        [Fact]
+        public async Task Delete_IsDeletedIsFalse_ReturnsNotFound()
+        {
+            //Arrange
+            var id = 123;
+
+            mockPropertyService.Setup(service => service.DeleteProperty(id))
+                .ReturnsAsync(false);
+
+            var sut = new PropertyController(mockPropertyService.Object);
+
+            //Act
+            var result = await sut.DeletePropertyAsync(id);
+
+            //Assert
+            result.Should().BeOfType<NotFoundResult>();
+        }
+
         #endregion
 
     }

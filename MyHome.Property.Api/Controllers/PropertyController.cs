@@ -52,6 +52,13 @@ namespace MyHome.Property.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePropertyAsync(int id)
         {
+            if(id < 0) return BadRequest();
+
+            var isDeleted = await _propertyService.DeleteProperty(id);
+
+            if(!isDeleted)
+                return NotFound();
+
             return NoContent();
         }
     }
