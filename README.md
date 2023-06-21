@@ -23,3 +23,6 @@ Alternative Database Setup
 4. Uncomment the InMemoryDatabase section.
 
 By performing the above steps, the project will use an in-memory database instead of MongoDB.
+
+## Note
+The Common project is more so a nuget package that could be consumed across multiple services. I just left it like this for the sake of this demo.
