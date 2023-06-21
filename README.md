@@ -17,9 +17,9 @@ docker-compose up -d
 Note: Docker must be installed on your system for this command to work. If you don't have Docker installed, you can use an alternative database setup.
 Alternative Database Setup
 
-    Open the Program.cs file.
-    Locate the section related to the database setup.
-    Comment out the AddMongo part.
-    Uncomment the InMemoryDatabase section.
+1. Open the Program.cs file.
+2. Locate the section related to the database setup.
+3. Comment out the AddMongo part.
+4. Uncomment the InMemoryDatabase section.
 
 By performing the above steps, the project will use an in-memory database instead of MongoDB.
