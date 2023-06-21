@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MongoDB.Driver;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using MongoDB.Driver;
-using MyHome.Common;
 namespace MyHome.Common.MongoDb
 {
     public class MongoRepository<T> : IRepository<T> where T : IEntity
@@ -24,17 +20,17 @@ namespace MyHome.Common.MongoDb
 
         public async Task<IReadOnlyCollection<T>> GetAllAsync(Expression<Func<T, bool>> filter)
         {
-            return await dbCollection.Find(filter).ToListAsync(); 
+            return await dbCollection.Find(filter).ToListAsync();
         }
 
-       public async Task<T> GetAsync(int id)
+        public async Task<T> GetAsync(int id)
         {
             FilterDefinition<T> filter = filterBuilder.Eq(entity => entity.Id, id);
             return await dbCollection.Find(filter).FirstOrDefaultAsync();
         }
         public async Task<T> GetAsync(Expression<Func<T, bool>> filter)
-       {
-           return await dbCollection.Find(filter).FirstOrDefaultAsync();
+        {
+            return await dbCollection.Find(filter).FirstOrDefaultAsync();
         }
 
         public async Task CreateAsync(T entity)

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MyHome.Common
+﻿namespace MyHome.Common
 {
     public interface IEntity
     {

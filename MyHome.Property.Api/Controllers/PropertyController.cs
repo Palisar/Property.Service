@@ -38,12 +38,12 @@ namespace MyHome.Property.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdatePropertyAsync(UpdatePropertyRequest request)
         {
-            if(request.UpdatedModel is null)
+            if (request.UpdatedModel is null)
                 return BadRequest();
 
             var isUpdate = await _propertyService.UpdateProperty(request);
 
-            if(!isUpdate)
+            if (!isUpdate)
                 return NotFound();
 
             return NoContent();
@@ -52,11 +52,11 @@ namespace MyHome.Property.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePropertyAsync(int id)
         {
-            if(id < 0) return BadRequest();
+            if (id < 0) return BadRequest();
 
             var isDeleted = await _propertyService.DeleteProperty(id);
 
-            if(!isDeleted)
+            if (!isDeleted)
                 return NotFound();
 
             return NoContent();

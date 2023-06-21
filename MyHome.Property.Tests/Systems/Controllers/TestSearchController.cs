@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyHome.Property.Api.Controllers;
 using MyHome.Property.Business.Interfaces;
 using MyHome.Property.Entities.Entities;
@@ -134,7 +129,7 @@ namespace MyHome.Property.Tests.Systems.Controllers
                 Times.Once()
                 );
         }
-        
+
         [Fact]
         public async Task Post_OnEmptyRequest_Returns400()
         {
@@ -183,7 +178,7 @@ namespace MyHome.Property.Tests.Systems.Controllers
 
             mockPropertyService.Setup(service => service.UpdateProperty(request))
                 .ReturnsAsync(true);
-            
+
             //Act
             var sut = new PropertyController(mockPropertyService.Object);
             await sut.UpdatePropertyAsync(request);
@@ -236,7 +231,7 @@ namespace MyHome.Property.Tests.Systems.Controllers
 
         #endregion
 
-        #region DeleteProperty
+        #region DeleteTests
         [Fact]
         public async Task Delete_OnSuccess_ReturnsNoContent()
         {
@@ -244,7 +239,7 @@ namespace MyHome.Property.Tests.Systems.Controllers
             var id = 123;
 
             var sut = new PropertyController(mockPropertyService.Object);
-            
+
             mockPropertyService.Setup(service => service.DeleteProperty(id))
                 .ReturnsAsync(true);
 
@@ -290,7 +285,7 @@ namespace MyHome.Property.Tests.Systems.Controllers
                 Times.Once());
         }
 
-       
+
         [Fact]
         public async Task Delete_IsDeletedIsFalse_ReturnsNotFound()
         {

@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using MyHome.Common;
+﻿using MyHome.Common;
 using MyHome.Property.Entities.Entities;
-using MyHome.Property.Entities.Requests;
 using MyHome.Property.Entities.Responses;
+using System.Linq.Expressions;
+using System.Text.Json;
 
 namespace MyHome.Property.DAL
 {

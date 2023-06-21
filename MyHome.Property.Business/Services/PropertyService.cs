@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using MyHome.Common;
+﻿using MyHome.Common;
 using MyHome.Property.Business.Interfaces;
 
 using MyHome.Property.Entities.Entities;
 using MyHome.Property.Entities.Requests;
 using MyHome.Property.Entities.Responses;
-using MyHome.Common.MongoDb;
-using MongoDB.Driver.Core.Operations;
 
 namespace MyHome.Property.Business.Services
 {

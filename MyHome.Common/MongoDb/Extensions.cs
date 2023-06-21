@@ -5,9 +5,6 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using MyHome.Common.Settings;
-using MyHome.Common;
-using MyHome.Common.MongoDb;
-using MyHome.Common.Settings;
 
 
 namespace MyHome.Common.MongoDb
@@ -19,7 +16,7 @@ namespace MyHome.Common.MongoDb
             BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
             BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
             BsonSerializer.RegisterSerializer(new TimeSpanSerializer(BsonType.String));
-            
+
             services.AddSingleton(serviceProvider =>
             {
                 var configuration = serviceProvider.GetService<IConfiguration>();

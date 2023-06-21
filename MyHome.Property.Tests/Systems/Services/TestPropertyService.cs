@@ -1,5 +1,4 @@
-﻿using Microsoft.OpenApi.Services;
-using MyHome.Common;
+﻿using MyHome.Common;
 using MyHome.Property.Business.Services;
 using MyHome.Property.Entities.Entities;
 using MyHome.Property.Entities.Requests;

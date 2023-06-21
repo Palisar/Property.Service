@@ -1,9 +1,6 @@
-
-using MyHome.Common;
 using MyHome.Common.MongoDb;
 using MyHome.Property.Business.Interfaces;
 using MyHome.Property.Business.Services;
-using MyHome.Property.DAL;
 using MyHome.Property.Entities.Entities;
 
 namespace MyHome.Property.Api
@@ -16,7 +13,7 @@ namespace MyHome.Property.Api
 
             // Add services to the container.
             builder.Services.AddScoped<IPropertyService, PropertyService>();
-            
+
             ////NOTE : Made this singleton for example purposes only.
             //builder.Services.AddSingleton<IRepository<PropertyModel>, InMemoryPropertyDatabase>();
 

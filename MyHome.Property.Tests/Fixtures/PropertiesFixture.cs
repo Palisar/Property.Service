@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyHome.Property.Entities.Entities;
+﻿using MyHome.Property.Entities.Entities;
 using MyHome.Property.Entities.Responses;
 
 namespace MyHome.Property.Tests.Fixtures
@@ -30,7 +25,7 @@ namespace MyHome.Property.Tests.Fixtures
             SearchResults = new List<PropertyModel>()
         };
 
-        
+
 
 
     }
