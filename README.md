@@ -12,6 +12,7 @@ Run the following command to start the project using Docker:
 
 ```bash
 docker-compose up -d
+```
 
 Note: Docker must be installed on your system for this command to work. If you don't have Docker installed, you can use an alternative database setup.
 Alternative Database Setup
