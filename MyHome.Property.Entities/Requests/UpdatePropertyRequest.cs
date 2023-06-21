@@ -10,6 +10,6 @@ namespace MyHome.Property.Entities.Requests
 {
     public class UpdatePropertyRequest
     {
-        public PropertyModel UpdatedModel { get; set; }
+        public PropertyModel? UpdatedModel { get; set; }
     }
 }

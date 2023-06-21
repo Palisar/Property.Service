@@ -157,12 +157,15 @@ namespace MyHome.Property.Tests.Systems.Controllers
         #region UpdateTests
 
         [Fact]
-        public async Task UpdateProperty_OnSuccess_ReturnsStatusCode204()
+        public async Task Update_OnSuccess_ReturnsStatusCode204()
         {
             //Arrange
             var sut = new PropertyController(mockPropertyService.Object);
             var request = new UpdatePropertyRequest();
             request.UpdatedModel = new PropertyModel();
+
+            mockPropertyService.Setup(service => service.UpdateProperty(request))
+                .ReturnsAsync(true);
 
             //Act
             var result = (NoContentResult)await sut.UpdatePropertyAsync(request);
@@ -172,16 +175,16 @@ namespace MyHome.Property.Tests.Systems.Controllers
         }
 
         [Fact]
-        public async Task UpdateProperty_OnSuccess_InvokesPropertyServiceExactlyOnce()
+        public async Task Update_OnSuccess_InvokesPropertyServiceExactlyOnce()
         {
             //Arrange
             var request = new UpdatePropertyRequest();
             request.UpdatedModel = new PropertyModel();
 
-            //Act
             mockPropertyService.Setup(service => service.UpdateProperty(request))
-                .Returns(Task.CompletedTask);
-
+                .ReturnsAsync(true);
+            
+            //Act
             var sut = new PropertyController(mockPropertyService.Object);
             await sut.UpdatePropertyAsync(request);
 
@@ -195,22 +198,60 @@ namespace MyHome.Property.Tests.Systems.Controllers
         }
 
         [Fact]
-        public async Task UpdateProperty_OnEmptyRequest_Returns400()
+        public async Task Update_OnEmptyRequest_Returns400()
         {
             //Arrange
             var request = new UpdatePropertyRequest();
 
             mockPropertyService.Setup(service => service.UpdateProperty(request))
-                .Returns(Task.CompletedTask);
+                .ReturnsAsync(false);
 
             var sut = new PropertyController(mockPropertyService.Object);
 
             //Act
             var result = await sut.UpdatePropertyAsync(request);
+
             //Assert
             result.Should().BeOfType<BadRequestResult>();
         }
 
+        [Fact]
+        public async Task Update_OnInvalidProperty_Returns404()
+        {
+            //Arrange
+            var request = new UpdatePropertyRequest();
+            request.UpdatedModel = new PropertyModel();
+
+            mockPropertyService.Setup(service => service.UpdateProperty(request))
+                .ReturnsAsync(false);
+
+            var sut = new PropertyController(mockPropertyService.Object);
+
+            //Act
+            var result = await sut.UpdatePropertyAsync(request);
+
+            //Assert
+            result.Should().BeOfType<NotFoundResult>();
+        }
+
         #endregion
+
+        #region DeleteProperty
+        [Fact]
+        public async Task Delete_OnSuccess_ReturnsNoContent()
+        {
+            //Arrange
+            var id = 123;
+
+            var sut = new PropertyController(mockPropertyService.Object);
+
+            //Act
+            var result = await sut.DeletePropertyAsync(id);
+
+            //Assert
+            result.Should().BeOfType<NoContentResult>();
+        }
+        #endregion
+
     }
 }

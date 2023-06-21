@@ -13,14 +13,14 @@ using MyHome.Property.Entities.Responses;
 using MyHome.Common.MongoDb;
 namespace MyHome.Property.Business.Services
 {
-    public class PropertyService: IPropertyService
+    public class PropertyService : IPropertyService
     {
         private readonly IRepository<PropertyModel> _repository;
         public PropertyService(IRepository<PropertyModel> repository)
         {
             _repository = repository;
         }
-        
+
         public async Task<SearchResponse> GetAllProperties(SearchRequest request)
         {
             var searchResponse = new SearchResponse();
@@ -45,9 +45,20 @@ namespace MyHome.Property.Business.Services
             return createRequest.Model;
         }
 
-        public Task UpdateProperty(UpdatePropertyRequest updateRequest)
+        public async Task<bool> UpdateProperty(UpdatePropertyRequest updateRequest)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var existingProperty = await _repository.GetAllAsync(x => x.Id == updateRequest.UpdatedModel.Id);
+                if (!existingProperty.Any()) return false;
+
+                await _repository.UpdateAsync(updateRequest.UpdatedModel);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }

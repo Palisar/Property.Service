@@ -13,7 +13,7 @@ namespace MyHome.Property.Business.Interfaces
     {
         Task<SearchResponse> GetAllProperties(SearchRequest request);
         Task<PropertyModel> CreateProperty(CreatePropertyRequest createRequest);
-        Task UpdateProperty(UpdatePropertyRequest updateRequest);
+        Task<bool> UpdateProperty(UpdatePropertyRequest updateRequest);
         //Task DeleteProperty(int id);
 
     }

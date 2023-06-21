@@ -41,8 +41,17 @@ namespace MyHome.Property.Api.Controllers
             if(request.UpdatedModel is null)
                 return BadRequest();
 
-            await _propertyService.UpdateProperty(request);
+            var isUpdate = await _propertyService.UpdateProperty(request);
 
+            if(!isUpdate)
+                return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePropertyAsync(int id)
+        {
             return NoContent();
         }
     }

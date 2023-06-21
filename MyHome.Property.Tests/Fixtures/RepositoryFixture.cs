@@ -14,5 +14,11 @@ namespace MyHome.Property.Tests.Fixtures
             new PropertyModel(){Id = 123},
             new PropertyModel(){Id = 321}
         };
+
+        public static IReadOnlyCollection<PropertyModel> GetPropertyModelsById => new List<PropertyModel>()
+        {
+            new PropertyModel(){Id = 123}
+        };
+
     }
 }
