@@ -39,9 +39,20 @@ namespace MyHome.Property.Business.Services
         {
 
             var properties = await _repository.GetAllAsync();
-            var maxId = properties.MaxBy(x => x.Id).Id;
+            int maxId;
+
+            if (!properties.Any())
+            {
+                //Edge Case: Database was empty
+                maxId = 0;
+            }
+            else
+            {
+                maxId = properties.MaxBy(p => p.Id).Id;
+            }
 
             createRequest.Model.Id = maxId + 1;
+
             await _repository.CreateAsync(createRequest.Model);
 
             return createRequest.Model;
@@ -75,14 +86,14 @@ namespace MyHome.Property.Business.Services
                 if (!existingProperty.Any()) return false;
 
                 await _repository.RemoveAsync(id);
-                
+
                 return true;
             }
             catch (Exception e)
             {
                 return false;
             }
-          
+
         }
     }
 }

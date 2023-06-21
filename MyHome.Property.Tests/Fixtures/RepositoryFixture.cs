@@ -20,5 +20,7 @@ namespace MyHome.Property.Tests.Fixtures
             new PropertyModel(){Id = 123}
         };
 
-    }
+        public static PropertyModel GetFirstSingleProperty => new PropertyModel() { Id = 1 };
+    };
+    
 }

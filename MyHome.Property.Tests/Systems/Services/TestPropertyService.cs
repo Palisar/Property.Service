@@ -22,7 +22,7 @@ namespace MyHome.Property.Tests.Systems.Services
         {
             //arrange
             var request = new SearchRequest();
-            
+
             mockRepository.Setup(repo => repo.GetAllAsync())
                 .ReturnsAsync(RepositoryFixture.GetPropertyModels);
 
@@ -107,6 +107,29 @@ namespace MyHome.Property.Tests.Systems.Services
             result.Should().BeOfType<PropertyModel>();
             result.Id.Should().Be(322);//To show that a new Id has been assigned
         }
+
+        [Fact]
+        public async Task CreateProperty_GetAllAsyncEmpty_SetIdTo1()
+        {
+            //arrange
+            var request = new CreatePropertyRequest();
+            request.Model = new PropertyModel();
+
+            mockRepository.Setup(repo => repo.GetAllAsync())
+                .ReturnsAsync(new List<PropertyModel>());
+
+            mockRepository.Setup(repo => repo.CreateAsync(request.Model))
+                .Returns(Task.FromResult(RepositoryFixture.GetFirstSingleProperty)
+                );
+
+            var sut = new PropertyService(mockRepository.Object);
+
+            //act
+            var result = await sut.CreateProperty(request);
+
+            //assert
+            result.Id.Should().Be(1);//To show that a new Id has been assigned
+        }
         #endregion
 
         #region UpdateProperty
@@ -120,7 +143,7 @@ namespace MyHome.Property.Tests.Systems.Services
             mockRepository.Setup(repo =>
                     repo.GetAllAsync(x => x.Id == request.UpdatedModel.Id))
                 .ReturnsAsync(RepositoryFixture.GetPropertyModels);
-                        
+
 
             var sut = new PropertyService(mockRepository.Object);
 
@@ -160,15 +183,15 @@ namespace MyHome.Property.Tests.Systems.Services
                 Times.Once()
             );
         }
-      
+
         [Fact]
         public async Task UpdateProperty_WhenNotPropertyFound_ReturnFalse()
         {
             //arrange
             var request = new UpdatePropertyRequest();
-            request.UpdatedModel = new PropertyModel(){Id = 123};
+            request.UpdatedModel = new PropertyModel() { Id = 123 };
 
-            mockRepository.Setup(repo => 
+            mockRepository.Setup(repo =>
                     repo.GetAllAsync(x => x.Id == request.UpdatedModel.Id))
                 .ReturnsAsync(new List<PropertyModel>());
 
@@ -210,7 +233,7 @@ namespace MyHome.Property.Tests.Systems.Services
         #endregion
 
         #region DeleteProperty
-        
+
         [Fact]
         public async Task DeleteProperty_OnSuccess_ReturnTrue()
         {
@@ -257,7 +280,7 @@ namespace MyHome.Property.Tests.Systems.Services
         {
             //arrange
             var id = 123;
-            
+
             mockRepository.Setup(repo =>
                     repo.GetAllAsync(x => x.Id == id))
                 .ReturnsAsync(RepositoryFixture.GetPropertyModels);
