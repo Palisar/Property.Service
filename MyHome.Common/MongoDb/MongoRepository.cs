@@ -23,20 +23,9 @@ namespace MyHome.Common.MongoDb
             return await dbCollection.Find(filter).ToListAsync();
         }
 
-        public async Task<T> GetAsync(int id)
-        {
-            FilterDefinition<T> filter = filterBuilder.Eq(entity => entity.Id, id);
-            return await dbCollection.Find(filter).FirstOrDefaultAsync();
-        }
-        public async Task<T> GetAsync(Expression<Func<T, bool>> filter)
-        {
-            return await dbCollection.Find(filter).FirstOrDefaultAsync();
-        }
-
         public async Task CreateAsync(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
-
             await dbCollection.InsertOneAsync(entity);
         }
 
